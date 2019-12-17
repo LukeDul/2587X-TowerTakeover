@@ -1,5 +1,5 @@
 #include "main.h"
-//bro yus
+//bro yus suc dic
 //****************************|Initialize Function|*********************
 //info: Brake shorts the motors, hold uses PID.
 
@@ -80,7 +80,7 @@ tray_intake_deploy();
 
  pros::delay(2000);
 
- translate(1200, 40);
+ translate(1200, 40);//yuh
 
  setIntake(0);
 

@@ -9,7 +9,7 @@ void set_angler(int power)
 
 void stop_angler()
 {
-  angler.move_voltage(0);
+  angler.move_voltage(0);//0.0
 }
 
 double anglerPosition()
