@@ -1,5 +1,5 @@
 #include "main.h"
-//bro yus suc dic
+
 //****************************|Initialize Function|*********************
 //info: Brake shorts the motors, hold uses PID.
 
