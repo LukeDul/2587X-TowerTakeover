@@ -144,11 +144,15 @@ void opcontrol()
 
 	while(true)
 	{
-		setDriveMotors();
-		setIntakeMotors();
+		driveControl();
+
+		intakeControl();
+
 		anglerControl();
+
 		pros::lcd::print(0, "Angler val: %f", anglerPosition());
 		pros::lcd::print(1, "Lift val: %f", liftPosition());
+
 		pros::delay(10);
 	}
 }

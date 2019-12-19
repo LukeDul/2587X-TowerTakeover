@@ -25,17 +25,21 @@ void ml_down_position()
 {
   while(liftPosition()>0){
     set_lift(-127);
+
     pros::delay(10);
   }
   stop_lift();
   angler_down();
 }
 
-void ml_low_score_position(){
+void ml_low_score_position()
+{
   double target_position  = 2700;
+
   if(liftPosition()<target_position)
   {
     move_angler(1600,12000);
+
     while(liftPosition()<target_position)
     {
       if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))
@@ -49,6 +53,8 @@ void ml_low_score_position(){
 
   else if(liftPosition()>target_position)
   {
+    move_angler(1600,12000);
+
     while(liftPosition()>target_position)
     {
       if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN))
@@ -183,6 +189,7 @@ void lm_score_low_position()
       pros::delay(10);
     }
     angler_down();
+    
     stop_lift();
 
     intakeLeft.move_voltage(0);
@@ -207,6 +214,7 @@ void lift_macros_fn(void* param)
      if(isLiftMoving)
      {
        ml_low_score_position();
+
        isLiftMoving = false;
      }
 
@@ -218,6 +226,7 @@ void lift_macros_fn(void* param)
      if(isLiftMoving)
      {
        ml_down_position();
+
        isLiftMoving = false;
      }
 
@@ -229,6 +238,7 @@ void lift_macros_fn(void* param)
      if(isLiftMoving)
      {
        ml_medium_score_position();
+
        isLiftMoving = false;
      }
 
@@ -240,6 +250,7 @@ void lift_macros_fn(void* param)
      if(isLiftMoving)
      {
        ml_low_descore_position();
+
        isLiftMoving = false;
      }
 
@@ -251,6 +262,7 @@ void lift_macros_fn(void* param)
      if(isLiftMoving)
      {
        ml_medium_descore_position();
+
        isLiftMoving = false;
      }
 
@@ -262,6 +274,7 @@ void lift_macros_fn(void* param)
      if(isLiftMoving)
      {
        lm_score_low_position();
+
        isLiftMoving = false;
      }
 

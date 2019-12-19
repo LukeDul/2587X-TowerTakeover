@@ -32,16 +32,21 @@ void angler_down()
 
 //****************************|Custom Movement Functions|***************
 
-void move_angler_up(int target_position){
-  while (anglerPosition()<target_position){
+void move_angler_up(int target_position)
+{
+  while (anglerPosition()<target_position)
+  {
     set_angler(127);
+
     pros::delay(10);
   }
   stop_angler();
 }
 
-void move_angler_down(int target_position){
-  while (anglerPosition()>target_position){
+void move_angler_down(int target_position)
+{
+  while (anglerPosition()>target_position)
+  {
     set_angler(-127);
     pros::delay(10);
   }
@@ -165,6 +170,7 @@ void anglerControl()
   if(isTrayMoving)
   {
     stack_macro();
+
     isTrayMoving = false;
   }
 
@@ -176,6 +182,7 @@ void anglerControl()
   if(isTrayMoving)
   {
     release_macro();
+
     isTrayMoving = false;
   }
 }

@@ -1,25 +1,33 @@
 #include "main.h"
 
-#ifndef DRIVE_H 
+#ifndef DRIVE_H
 #define DRIVE_H
-//helper
+
+//****************************|Helper Functions|********************************
 void setDrive(int left, int right);
 
 void resetDriveEncoders();
+
 double avgDriveEncoderValue();
+
 double avgRightDrive();
+
 double avgLeftDrive();
-void right_translate( int units, int voltage);
-void left_translate(int units, int voltage);
 
-//DRIVER CONTROLER FUNCTIONS
-void setDriveMotors();
+double currDriveValue();
 
-//auton FUNCTIONS
+//****************************|Autonomous Functions|****************************
 void translate(int units, int voltage);
 
 void rotate(int degrees, int voltage);
 
 void drive_pid(double set_point);
+
+void right_translate( int units, int voltage);
+
+void left_translate(int units, int voltage);
+
+//****************************|Driver Control Function|*************************
+void driveControl();
 
 #endif

@@ -1,13 +1,13 @@
 #include "main.h"
 
-//helper functions
+//****************************|Helper Functions|********************************
 void setIntake(int power){
   intakeRight.move_voltage(power);
 	intakeLeft.move_voltage(power);
 }
 
- //driver control functions
-void setIntakeMotors()
+//****************************|Operation Control Function|********************************
+void intakeControl()
 {
   int intakePower = 127*(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)-controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1));
 
