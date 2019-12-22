@@ -80,13 +80,13 @@ void move_angler(int target_position, int voltage)
 //****************************|Macro Functions|****************************
 
 void stack_macro()
-{// remove drive forward at end of macro? switch speeds to voltage?
+{// remove drive forward at end of macro? switch to voltage?
 
-  setDrive(0, 0);
-
-  ml_down_position();//remove?
-
-  pros::delay(500);//remove?
+  // setDrive(0, 0);
+  //
+  // ml_down_position();//remove?
+  //
+  // pros::delay(500);//remove?
 
   double intitial_position = 1600;
   double mid_position = 3000;
@@ -134,7 +134,7 @@ void release_macro()
 {
   setDrive(0, 0);
 
-  ml_down_position();
+  // ml_down_position();
 
   double anglerFinal = 0;
 

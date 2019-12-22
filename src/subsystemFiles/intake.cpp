@@ -2,8 +2,8 @@
 
 //****************************|Helper Functions|********************************
 void setIntake(int power){
-  intakeRight.move_voltage(power);
-	intakeLeft.move_voltage(power);
+  intakeRight = power;
+	intakeLeft = power;
 }
 
 //****************************|Operation Control Function|********************************

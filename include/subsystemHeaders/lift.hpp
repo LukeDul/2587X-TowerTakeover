@@ -1,6 +1,6 @@
 #include "main.h"
 
-#ifndef LIFT_H 
+#ifndef LIFT_H
 #define LIFT_H
 //****************************|Helper Functions|****************************
 void set_lift(int power);
@@ -21,5 +21,5 @@ void lm_score_low_position();
 //****************************|Lift Operation Control|***********************
 
 void lift_macros_fn(void* param);
-
+void lift_pos(void*param);
 #endif

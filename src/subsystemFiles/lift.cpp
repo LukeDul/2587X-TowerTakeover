@@ -189,7 +189,7 @@ void lm_score_low_position()
       pros::delay(10);
     }
     angler_down();
-    
+
     stop_lift();
 
     intakeLeft.move_voltage(0);
@@ -281,4 +281,47 @@ void lift_macros_fn(void* param)
     pros::delay(10);
 
    }
-}
+ }
+
+
+
+     void lift_pos(void* param){
+
+       int pos = 0;
+       int last_pos=3;
+       while(true){
+
+         if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+           pos++;
+         }else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
+           pos--;
+         }
+
+
+         if(pos>2){
+           pos = 2;
+         }
+         else if(pos<0){
+           pos = 0;
+         }
+
+
+        if(pos!=last_pos){
+
+         switch(pos){
+           case 0:
+            ml_down_position();
+            break;
+           case 1:
+            ml_low_score_position();
+            break;
+           case 2:
+            ml_medium_score_position();
+            break;
+         }
+       }
+       last_pos = pos;
+          pros::delay(20);
+       }
+
+   }

@@ -7,7 +7,7 @@ void initialize()
 {
 	pros::lcd::initialize();
 	//pros::delay(2000);//gyro delay
-	pros::Task lift_macros (lift_macros_fn, (void*)"PROS", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "LiftMacros");
+	pros::Task lift_macros (lift_pos, (void*)"PROS", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "LiftMacros");
 
 	driveRightFront.set_brake_mode	(pros::E_MOTOR_BRAKE_COAST);
 	driveRightBack.set_brake_mode		(pros::E_MOTOR_BRAKE_COAST);
