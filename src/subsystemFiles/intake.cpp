@@ -13,14 +13,16 @@ void intakeControl()
 
   int intakeSlow = 60*(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)-controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1));
 
-  if((liftPosition()>2600 && liftPosition() < 2900) || liftPosition() > 3100)
-  {
-    setIntake(intakeSlow);
-  }
 
-  else
-  {
-    setIntake(intakePower);
-  }
+   setIntake(intakePower);
+  // if((liftPosition()>2600 && liftPosition() < 2900) || liftPosition() > 3100)
+  // {
+  //   setIntake(intakeSlow);
+  // }
+  //
+  // else
+  // {
+  //   setIntake(intakePower);
+  // }
 
 }

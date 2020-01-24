@@ -29,16 +29,16 @@ void ml_down_position()
     pros::delay(10);
   }
   stop_lift();
-  angler_down();
+
 }
 
 void ml_low_score_position()
 {
-  double target_position  = 2700;
+  double target_position  = 1700;
 
   if(liftPosition()<target_position)
   {
-    move_angler(1600,12000);
+
 
     while(liftPosition()<target_position)
     {
@@ -53,7 +53,7 @@ void ml_low_score_position()
 
   else if(liftPosition()>target_position)
   {
-    move_angler(1600,12000);
+
 
     while(liftPosition()>target_position)
     {
@@ -76,7 +76,6 @@ void ml_low_descore_position()
 
   if(liftPosition()<target_position)
   {
-    move_angler(1600,12000);
 
     while(liftPosition()<target_position)
     {
@@ -107,7 +106,7 @@ void ml_low_descore_position()
 void ml_medium_score_position()
 {
   double target_position = 3200;
-  move_angler(1800,12000);
+
 
   while(liftPosition()<target_position)
   {
@@ -131,7 +130,7 @@ void ml_medium_descore_position()
 
   if(liftPosition()<target_position)
   {
-    move_angler(1800,12000);
+
 
     while(liftPosition()<target_position)
     {
@@ -188,7 +187,7 @@ void lm_score_low_position()
 
       pros::delay(10);
     }
-    angler_down();
+
 
     stop_lift();
 
@@ -282,46 +281,3 @@ void lift_macros_fn(void* param)
 
    }
  }
-
-
-
-     void lift_pos(void* param){
-
-       int pos = 0;
-       int last_pos=3;
-       while(true){
-
-         if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
-           pos++;
-         }else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-           pos--;
-         }
-
-
-         if(pos>2){
-           pos = 2;
-         }
-         else if(pos<0){
-           pos = 0;
-         }
-
-
-        if(pos!=last_pos){
-
-         switch(pos){
-           case 0:
-            ml_down_position();
-            break;
-           case 1:
-            ml_low_score_position();
-            break;
-           case 2:
-            ml_medium_score_position();
-            break;
-         }
-       }
-       last_pos = pos;
-          pros::delay(20);
-       }
-
-   }
