@@ -145,7 +145,7 @@ void opcontrol()
 	while(true)
 	{
 	lift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	lift = -5;
+
 		driveControl();
 
 		intakeControl();

@@ -15,14 +15,5 @@ void intakeControl()
 
 
    setIntake(intakePower);
-  // if((liftPosition()>2600 && liftPosition() < 2900) || liftPosition() > 3100)
-  // {
-  //   setIntake(intakeSlow);
-  // }
-  //
-  // else
-  // {
-  //   setIntake(intakePower);
-  // }
 
 }
