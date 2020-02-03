@@ -7,7 +7,7 @@ extern int frontLeft;
 extern int backLeft;
 extern int frontRight;
 extern int backRight;
-
+extern int anglerPort;
 extern int liftPort;
 extern int intakeLeftPort;
 extern int intakeRightPort;
@@ -20,7 +20,6 @@ extern pros::Motor driveLeftBack;
 extern pros::Motor driveLeftFront;
 extern pros::Motor driveRightBack;
 extern pros::Motor driveRightFront;
-extern MotorGroup intake;
 
 //****************************|Sensors|****************************
 extern pros::ADIGyro gyro;
