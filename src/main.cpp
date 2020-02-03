@@ -125,10 +125,25 @@ void red_big_zone(){
 //red_small_zone();
 //red_big_zone
 //one_point();
+auto myChassis =
+  okapi::ChassisControllerBuilder()
+    .withMotors({7, 6}, {9, 10})
+    .withDimensions(okapi::AbstractMotor::gearset::green, {{4.125_in, 8.8125_in}, okapi::imev5GreenTPR})
+    .build();
+
+auto profileController =
+  okapi::AsyncMotionProfileControllerBuilder()
+    .withLimits({1.0, 2.0, 10.0})
+    .withOutput(myChassis)
+    .buildMotionProfileController();
 
 void autonomous()
 {
-	one_point();
+	profileController->generatePath({
+	  {0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+	  {3_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+	  "A"
+	);
 }
 
 //****************************|Operation Control|****************************
@@ -139,8 +154,8 @@ void opcontrol()
 	driveLeftFront.set_brake_mode		(pros::E_MOTOR_BRAKE_BRAKE);
 	driveRightBack.set_brake_mode		(pros::E_MOTOR_BRAKE_BRAKE);
 	driveRightFront.set_brake_mode	(pros::E_MOTOR_BRAKE_BRAKE);
-	intakeLeft.set_brake_mode				(pros::E_MOTOR_BRAKE_BRAKE);
-	intakeRight.set_brake_mode			(pros::E_MOTOR_BRAKE_BRAKE);
+	intakeLeft.set_brake_mode				(pros::E_MOTOR_BRAKE_HOLD);
+	intakeRight.set_brake_mode			(pros::E_MOTOR_BRAKE_HOLD);
 
 	while(true)
 	{
