@@ -7,7 +7,6 @@ void initialize()
 {
 	pros::lcd::initialize();
 
-	pros::Task lift_macros (lift_macros_fn, (void*)"PROS", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "LiftMacros");
 
 }
 
@@ -41,7 +40,7 @@ void antitip_deploy()//will not work if against wall
 //scores one cube in any zone
 void one_point()
 {//delays could be less
-	tray_intake_deploy();
+//	tray_intake_deploy();
 
 	translate(300, -127);
 
@@ -101,9 +100,9 @@ auto myChassis =
 
 void robot_deploy()
 {
-	myChassis.moveDistance(0.5_ft);
+	myChassis->moveDistance(0.5_ft);
 	setIntake(-200);
-	myChassis.moveDistance(-0.5_ft);
+	myChassis->moveDistance(-0.5_ft);
 	setIntake(0);
 }
 
@@ -143,7 +142,9 @@ void red_small_zone(){
 	fast->setTarget("Goal Align Pt 2");
 	fast->waitUntilSettled();
 
-	outtake_stack();
+	intake.moveRelative(90,50);
+	stack_macro();
+	release_macro();
 
 
 }

@@ -45,42 +45,7 @@ double currDriveValue()
 
 //****************************|Auton Functions|*********************************
 
-void drive_pid(double set_point)
-{
-  driveLeftBack.set_brake_mode   (pros::E_MOTOR_BRAKE_COAST);
-  driveLeftFront.set_brake_mode  (pros::E_MOTOR_BRAKE_COAST);
-  driveRightBack.set_brake_mode  (pros::E_MOTOR_BRAKE_COAST);
-  driveRightFront.set_brake_mode (pros::E_MOTOR_BRAKE_COAST);
 
-  double error, power, integral, derivative;
-  double kP = 0.04;
-  double kI = 0;
-  double kD = 0;
-  double prevError = 0;
-
-  while(true)
-  {
-    error = set_point - currDriveValue();
-
-    integral = integral + error;
-
-    if(error == 0 || error > set_point)
-      integral = 0;
-
-    if(integral >1000)
-      integral = 0;
-
-    derivative = error - prevError;
-
-    prevError = error;
-
-    power = error*kP + integral*kI +derivative*kD;
-
-    setDrive(power, power);
-
-    pros::delay(15);
-  }
-}
 
 void translate(int units, int voltage)
 {
@@ -152,47 +117,6 @@ void left_translate(int units, int voltage)
   driveRightFront.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 }
 
-void rotate(int degrees, int voltage)
-{
-   //define direction based on units provided
-   int direction = abs(degrees)/degrees;
-   //reset gyroscope
-   gyro.reset();
-   //turn until units -5 degrees is reached
-  setDrive(-voltage*direction, voltage*direction);
-
-   while(fabs(gyro.get_value()) < abs(degrees*10) - 50)
-   {
-     pros::delay(10);
-   }
-    //letting robot lose momentum
-   pros::delay(100);
-   //correcting overshoot
-   if(fabs(gyro.get_value()) > abs(degrees*10))
-   {
-     setDrive(0.5*voltage*direction, 0.5*-voltage*direction);
-
-     while(fabs(gyro.get_value()) > abs(degrees*10))
-     {
-       pros::delay(10);
-     }
-      //correcting undershoot
-   }
-
-   else if(fabs(gyro.get_value()) < abs(degrees*10))
-   {
-     setDrive(0.5*-voltage*direction, 0.5*voltage*direction);
-
-     while(fabs(gyro.get_value()) > abs(degrees*10))
-     {
-       pros::delay(10);
-     }
-   }
-   //set motors to neutral
-   setDrive(0, 0);
-
-   gyro.reset();
-}
 
 //****************************|Auton Functions|*********************************
 
