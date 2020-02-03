@@ -9,14 +9,6 @@ void initialize()
 
 	pros::Task lift_macros (lift_macros_fn, (void*)"PROS", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "LiftMacros");
 
-	driveRightFront.set_brake_mode	(pros::E_MOTOR_BRAKE_COAST);
-	driveRightBack.set_brake_mode		(pros::E_MOTOR_BRAKE_COAST);
-	driveLeftFront.set_brake_mode		(pros::E_MOTOR_BRAKE_COAST);
-	driveLeftBack.set_brake_mode		(pros::E_MOTOR_BRAKE_COAST);
-	intakeRight.set_brake_mode			(pros::E_MOTOR_BRAKE_HOLD);
-	intakeLeft.set_brake_mode				(pros::E_MOTOR_BRAKE_HOLD);
-	angler.set_brake_mode						(pros::E_MOTOR_BRAKE_HOLD);
-	lift.set_brake_mode							(pros::E_MOTOR_BRAKE_HOLD);
 }
 
 //****************************|Disabled Function|*************************
@@ -69,42 +61,50 @@ void one_point()
 	antitip_deploy();
 }
 
-void blue_small_zone()
+void outtake_stack()
 {
-tray_intake_deploy();
-
- //intake 4 cubes
- setIntake(12000);
-
- translate(1500, 40);
-
- pros::delay(2000);
-
- translate(1200, 40);//yuh
-
- setIntake(0);
-
- // //drive back to wall
-
- translate(2700, -60);
-
- translate(1000, 40);
-
- left_translate(600, -40);
-
-	translate(600, -40);
-
-	left_translate(600, -40);
-
-// drive forward
-//left side turn to align with goal blue_small_zone
-// turn intake on
-// drive forward an intake cube
-// pause
-// drive forward and stack
-// drive back and release stack
-
+	setIntake(-75);
+	pros::Task::delay(120);
+	setIntake(0);
 }
+
+auto chassisauto = okapi::ChassisControllerBuilder()
+		.withMotors({frontLeft, backLeft}, {frontRight, backRight}) // left motor is 1, right motor is 2 (reversed)
+		.withGains(
+			 {0.001, 0.001, 0.00009}, // Distance controller gains 0.005, 0, 0.001
+			 {0.00075, 0.001, 0.00009}, // Turn controller gains
+			 {0.001, 0.001, 0.0001}  // Angle controller gains (helps drive straight)
+		 )
+		.withDimensions(AbstractMotor::gearset::green, {{4.125_in, 9.1_in}, okapi::imev5GreenTPR})
+		.withOdometry() // use the same scales as the chassis (above)
+		.withMaxVelocity(200)
+		.buildOdometry(); // build an odometry chassis
+
+auto myChassis =
+  okapi::ChassisControllerBuilder()
+    .withMotors({frontLeft, backLeft}, {frontRight, backRight})
+    .withDimensions(okapi::AbstractMotor::gearset::green, {{4.125_in, 13.21875_in}, okapi::imev5GreenTPR})
+    .build();
+
+		auto fast =
+		  AsyncMotionProfileControllerBuilder()
+		    .withLimits({
+		      1.1,  //max velocity
+		      2.5,  //max acceleration
+		      10.0  //max jerk
+		    })
+		    .withOutput(myChassis)
+		    .buildMotionProfileController();
+
+		auto slow =
+		  AsyncMotionProfileControllerBuilder()
+		    .withLimits({
+		      0.3,  //max velocity
+		      2.0,  //max acceleration
+		      10.0  //max jerk
+		    })
+		    .withOutput(myChassis)
+		    .buildMotionProfileController();
 
 void blue_big_zone(){
 
@@ -112,6 +112,40 @@ void blue_big_zone(){
 
 void red_small_zone(){
 
+	slow->generatePath({
+	  {0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
+	  {4_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
+	  "Cube Line"
+	);
+
+	setIntake(127);
+	lift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
+	slow->setTarget("Cube Line");
+	slow->waitUntilSettled();
+
+	fast->generatePath({
+		{0_ft, 0_ft, 0_deg},
+		{3.1_ft, 0_ft, 0_deg}},
+		"Goal Align Pt 1"
+	);
+	fast->setTarget("Goal Align Pt 1", 1);
+	fast->waitUntilSettled();
+
+	chassisauto->turnAngle(136_deg);
+
+	fast->generatePath({
+		{0_ft, 0_ft, 0_deg},
+		{0.7_ft, 0_ft, 0_deg}},
+		"Goal Align Pt 2"
+	);
+	fast->setTarget("Goal Align Pt 2");
+	fast->waitUntilSettled();
+
+	outtake_stack();
+
+	stack_macro();
+	release_macro();
 }
 
 void red_big_zone(){
@@ -125,26 +159,29 @@ void red_big_zone(){
 //red_small_zone();
 //red_big_zone
 //one_point();
-auto myChassis =
-  okapi::ChassisControllerBuilder()
-    .withMotors({7, 6}, {9, 10})
-    .withDimensions(okapi::AbstractMotor::gearset::green, {{4.125_in, 8.8125_in}, okapi::imev5GreenTPR})
-    .build();
-
-auto profileController =
-  okapi::AsyncMotionProfileControllerBuilder()
-    .withLimits({1.0, 2.0, 10.0})
-    .withOutput(myChassis)
-    .buildMotionProfileController();
 
 void autonomous()
 {
-	profileController->generatePath({
-	  {0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-	  {3_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forward
-	  "A"
-	);
+	red_small_zone();
 }
+//****************************|Operation Control|****************************
+
+
+const int NUM_HEIGHTS = 2;
+
+const int height1 = 1000;
+const int height2 = 1700;
+const double kP = 0.004;
+const double kI = 0.000001;
+const double kD = 0.000082;
+
+okapi::ControllerButton btnUp(okapi::ControllerDigital::L1);
+okapi::ControllerButton btnDown(okapi::ControllerDigital::L2);
+auto liftControl = okapi::AsyncPosControllerBuilder()
+		.withMotor(-3)
+			.withGains({kP, kI, kD})
+		.build();
+const int heights[NUM_HEIGHTS] = {height1, height2};
 
 //****************************|Operation Control|****************************
 
@@ -159,7 +196,13 @@ void opcontrol()
 
 	while(true)
 	{
-	lift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	 lift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
+	if (btnUp.changedToPressed()) {
+			liftControl->setTarget(1700);
+		} else if (btnDown.changedToPressed() ){
+			liftControl->setTarget(0);
+		}
 
 		driveControl();
 

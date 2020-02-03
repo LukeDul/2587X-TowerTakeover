@@ -2,7 +2,15 @@
 
 #ifndef GLOBALS_H
 #define GLOBALS_H
-
+//****************************|Ports|****************************
+extern int frontLeft;
+extern int backLeft;
+extern int frontRight;
+extern int backRight;
+extern int anglerPort;
+extern int liftPort;
+extern int intakeLeftPort;
+extern int intakeRightPort;
 //****************************|Motors|****************************
 extern pros::Motor lift;
 extern pros::Motor intakeLeft;
