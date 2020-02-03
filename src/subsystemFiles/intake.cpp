@@ -7,6 +7,7 @@ void setIntake(int power){
 }
 
 
+
 //****************************|Operation Control Function|********************************
 void intakeControl()
 {
