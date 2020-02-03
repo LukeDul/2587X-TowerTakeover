@@ -22,7 +22,16 @@ void competition_initialize() {}
 //****************************|Auton Helper Functions|*********************
 
 //deploys intake and tray
+void tray_intake_deploy()//preload cannot be in front of robot
+{//delays could be less
+	setIntake(-12000);
 
+	pros::delay(1000);
+
+	setIntake(0);
+
+	pros::delay(1000);
+}
 
 //deploys anti-tips
 void antitip_deploy()//will not work if against wall
@@ -33,8 +42,6 @@ void antitip_deploy()//will not work if against wall
 
 	move_angler_down(0);
 }
-
-
 
 //****************************|Auton Functions|****************************
 
@@ -56,9 +63,9 @@ void one_point()
 
 void outtake_stack()
 {
-	intake.moveRelative(90,50);
-	stack_macro();
-	release_macro();
+	setIntake(-75);
+	pros::Task::delay(120);
+	setIntake(0);
 }
 
 auto chassisauto = okapi::ChassisControllerBuilder()
@@ -99,14 +106,6 @@ auto myChassis =
 		    .withOutput(myChassis)
 		    .buildMotionProfileController();
 
-void robot_deploy()
-{
-	myChassis.moveDistance(0.5_ft);
-	setIntake(-200);
-	myChassis.moveDistance(-0.5_ft);
-	setIntake(0);
-}
-
 void blue_big_zone(){
 
 }
@@ -145,7 +144,8 @@ void red_small_zone(){
 
 	outtake_stack();
 
-
+	stack_macro();
+	release_macro();
 }
 
 void red_big_zone(){
@@ -162,7 +162,6 @@ void red_big_zone(){
 
 void autonomous()
 {
-	robot_deploy();
 	red_small_zone();
 }
 //****************************|Operation Control|****************************
