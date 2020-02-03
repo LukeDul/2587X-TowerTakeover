@@ -21,7 +21,16 @@ void competition_initialize() {}
 //****************************|Auton Helper Functions|*********************
 
 //deploys intake and tray
+void tray_intake_deploy()//preload cannot be in front of robot
+{//delays could be less
+	setIntake(-12000);
 
+	pros::delay(1000);
+
+	setIntake(0);
+
+	pros::delay(1000);
+}
 
 //deploys anti-tips
 void antitip_deploy()//will not work if against wall
@@ -107,7 +116,6 @@ void robot_deploy()
 }
 
 void blue_big_zone(){
-
 }
 
 void red_small_zone(){
@@ -179,6 +187,7 @@ const double kD = 0.000082;
 
 okapi::ControllerButton btnUp(okapi::ControllerDigital::L1);
 okapi::ControllerButton btnDown(okapi::ControllerDigital::L2);
+
 auto liftControl = okapi::AsyncPosControllerBuilder()
 		.withMotor(-3)
 			.withGains({kP, kI, kD})
