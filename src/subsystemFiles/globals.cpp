@@ -5,7 +5,7 @@
  int frontRight = 10;
  int backRight = 7;
 
- int intakeLeftPort = 5;
+ int intakeLeftPort = 2;
  int intakeRightPort = 4;
  int liftPort = 3;
  int anglerPort = 8;

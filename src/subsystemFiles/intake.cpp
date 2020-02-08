@@ -10,11 +10,16 @@ void setIntake(int power){
 //****************************|Operation Control Function|********************************
 void intakeControl()
 {
-  int intakePower = 127*(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)-controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1));
 
-  int intakeSlow = 60*(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)-controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1));
+  if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+    setIntake(127);
+  }else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+      setIntake(-127);
+  }else {
+    setIntake(0);
+  }
 
 
-   setIntake(intakePower);
+
 
 }

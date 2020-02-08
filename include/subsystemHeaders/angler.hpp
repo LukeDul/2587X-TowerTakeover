@@ -16,6 +16,8 @@ void move_angler(int target_position, int voltage);
 //****************************|Macro Functions|******************************
 void stack_macro();
 void release_macro();
+void five_cube_stack();
+void auton_release();
 
 //****************************|Angler Operation Control|**********************
 void anglerControl();

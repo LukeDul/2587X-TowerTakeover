@@ -155,6 +155,69 @@ void release_macro()
 
   setDrive(0,0);
 }
+void five_cube_stack(){
+    double intitial_position = 1600;
+    double mid_position = 3000;
+    double final_position = 4200;
+    int initSpeed = 127;
+    int midSpeed = 127;
+    int finalSpeed = 60;
+
+    while(anglerPosition()<final_position)
+    {
+
+      if(anglerPosition()<intitial_position)
+      {
+        set_angler(initSpeed);
+      }
+
+      else if(anglerPosition()<mid_position)
+      {
+        set_angler(midSpeed);
+      }
+
+      else
+      {
+        set_angler(finalSpeed);
+      }
+
+      if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y))
+      {
+        move_angler(0, 4000);
+        break;
+      }
+
+      pros::delay(10);
+    }
+    stop_angler();
+
+    setDrive(20, 20);
+
+    pros::delay(500);
+
+    setDrive(0,0);
+}
+void auton_release(){
+
+  double anglerFinal = 3000;
+
+  while(anglerPosition()>anglerFinal)
+  {
+    setIntake(-127);
+
+    setDrive(-100, -100);
+
+    set_angler(-127);
+
+    pros::delay(10);
+  }
+
+  stop_angler();
+
+  setIntake(0);
+
+  setDrive(0,0);
+}
 
 //****************************|Angler Operation Control|****************************
 
