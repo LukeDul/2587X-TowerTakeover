@@ -1,14 +1,62 @@
 #include "main.h"
 okapi::Motor intake_left(2);
 okapi::Motor intake_right(4);
+
+bool runRedSmallZone = false;
+bool runBlueSmallZone = false;
+bool runOnePointAuton = false;
+
+void on_left_button() {
+  static bool pressed = false;
+  pressed = !pressed;
+  if (pressed) {
+		runBlueSmallZone = false;
+		runOnePointAuton = false;
+		runRedSmallZone = true;
+    pros::lcd::set_text(2, "Run Red Small Zone");
+
+  } else {
+    pros::lcd::clear_line(2);
+  }
+}
+
+void on_center_button() {
+  static bool pressed = false;
+  pressed = !pressed;
+  if (pressed) {
+    pros::lcd::set_text(2, "Run 1 Point Auton");
+		runOnePointAuton = true;
+		runBlueSmallZone = false;
+		runRedSmallZone = false;
+  } else {
+    pros::lcd::clear_line(2);
+  }
+}
+
+void on_right_button() {
+  static bool pressed = false;
+  pressed = !pressed;
+  if (pressed) {
+    pros::lcd::set_text(2, "Run Blue Small Zone ");
+		runBlueSmallZone = true;
+		runRedSmallZone = false;
+		runOnePointAuton = false;
+  } else {
+    pros::lcd::clear_line(2);
+  }
+}
+
+
 //****************************|Initialize Function|*********************
 //info: Brake shorts the motors, hold uses PID.
-
 void initialize()
 {
 	pros::lcd::initialize();
+	pros::lcd::register_btn0_cb(on_left_button);
+	pros::lcd::register_btn2_cb(on_right_button);
+	pros::lcd::register_btn1_cb(on_center_button);
 
-//	pros::Task lift_macros (lift_macros_fn, (void*)"PROS", TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "LiftMacros");
+
 
 }
 
@@ -292,6 +340,10 @@ void red_big_zone(){
 
 }
 
+void blue_big_zone(){
+
+}
+
 //****************************|Auton Main|****************************
 //Auton options:
 //blue_small_zone();
@@ -302,9 +354,17 @@ void red_big_zone(){
 
 void autonomous()
 {
-	//red_small_zone();
-	blue_small_zone();
+	// if(runRedSmallZone == true){
+	// 	red_small_zone();
+	// }else if (runBlueSmallZone == true){
+	// 	blue_small_zone();
+	// }else if(runOnePointAuton == true){
+	// 	one_point();
+	// }
 
+	//blue_small_zone();
+	red_small_zone();
+//	one_point();
 }
 //****************************|Operation Control|****************************
 
