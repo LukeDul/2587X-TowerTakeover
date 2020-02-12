@@ -396,7 +396,7 @@ void opcontrol()
 		lift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
 	 if (btnUp.changedToPressed()) {
-			 liftControl->setTarget(1700);
+			 liftControl->setTarget(1800);
 			 pros::delay(150);
 			 setIntake(-127);
 			 pros::delay(200);

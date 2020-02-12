@@ -80,22 +80,19 @@ void move_angler(int target_position, int voltage)
 //****************************|Macro Functions|****************************
 
 void stack_macro()
-{// remove drive forward at end of macro? switch to voltage?
+{
 
-  // setDrive(0, 0);
-  //
-  // ml_down_position();//remove?
-  //
-  // pros::delay(500);//remove?
 
   double intitial_position = 1600;
   double mid_position = 3000;
-  double final_position = 4200;
+  double final_position = 3900;
+  double final_finalposition = 4100;
   int initSpeed = 127;
   int midSpeed = 100;
-  int finalSpeed = 35;
+  int finalSpeed = 45;
+  int finalfinalSpeed = 35;
 
-  while(anglerPosition()<final_position)
+  while(anglerPosition()<final_finalposition)
   {
 
     if(anglerPosition()<intitial_position)
@@ -108,10 +105,15 @@ void stack_macro()
       set_angler(midSpeed);
     }
 
-    else
+    else if(anglerPosition()<final_position)
     {
       set_angler(finalSpeed);
     }
+    else
+    {
+      set_angler(finalfinalSpeed);
+    }
+
 
     if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y))
     {
@@ -220,6 +222,8 @@ void auton_release(){
 }
 
 //****************************|Angler Operation Control|****************************
+//pros::E_CONTROLLER_DIGITAL_X up
+//pros::E_CONTROLLER_DIGITAL_B down
 
 void anglerControl()
 {

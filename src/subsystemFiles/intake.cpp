@@ -11,15 +11,20 @@ void setIntake(int power){
 void intakeControl()
 {
 
-  if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+  if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
+  {
     setIntake(127);
-  }else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
-      setIntake(-127);
-  }else {
+  }
+  else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
+  {
+    setIntake(-127);
+  }else
+  {
     setIntake(0);
   }
-
-
-
+  if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)&&controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
+  {
+    setIntake(-100);
+  }
 
 }
