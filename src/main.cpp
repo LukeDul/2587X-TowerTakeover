@@ -403,6 +403,7 @@ void opcontrol()
 		 }
 		  else if (btnDown.changedToPressed() ){
 			 ml_down_position();
+
 		 }
 
 		pros::lcd::print(0, "Angler val: %f", anglerPosition());

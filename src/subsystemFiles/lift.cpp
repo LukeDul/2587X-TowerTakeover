@@ -25,7 +25,10 @@ void ml_down_position()
 {
   while(liftPosition()>0){
     set_lift(-127);
-
+  if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+    ml_low_score_position();
+    break;
+  }
     pros::delay(10);
   }
   stop_lift();
@@ -34,7 +37,7 @@ void ml_down_position()
 
 void ml_low_score_position()
 {
-  double target_position  = 1700;
+  double target_position  = 1800;
 
   if(liftPosition()<target_position)
   {
