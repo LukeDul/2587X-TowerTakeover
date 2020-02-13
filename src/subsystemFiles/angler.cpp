@@ -34,6 +34,8 @@ void angler_down()
 
 void move_angler_up(int target_position)
 {
+  intakeLeft.set_brake_mode				(pros::E_MOTOR_BRAKE_COAST);
+  intakeRight.set_brake_mode			(pros::E_MOTOR_BRAKE_COAST);
   while (anglerPosition()<target_position)
   {
     set_angler(127);
@@ -142,7 +144,7 @@ void release_macro()
 
   while(anglerPosition()>anglerFinal)
   {
-    setIntake(-63);
+    setIntake(-127);
 
     setDrive(-30, -30);
 
