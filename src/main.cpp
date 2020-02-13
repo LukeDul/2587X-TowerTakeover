@@ -172,8 +172,8 @@ auto myChassis =
 		    .withOutput(myChassis)
 		    .buildMotionProfileController();
 
-void blue_small_zone(){
-	angler.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+void deploy_small_side(){
+  angler.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
 	lift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
@@ -205,10 +205,209 @@ void blue_small_zone(){
 	intake_right.moveVoltage(0);
 	pros::delay(400);
 	antitip_deploy();
+}
+void programmingSkills()
+{
+  deploy_small_side();
+
+  slow->generatePath({
+		{0_ft, 0_ft, 0_deg},
+		{3.25_ft, 0_ft, 0_deg}},
+		"Cube Line 1"
+	);
+
+	intake_left.moveVoltage(12000);
+	intake_right.moveVoltage(12000);
+
+	lift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
+	slow->setTarget("Cube Line");
+	slow->waitUntilSettled();
+
+  chassisauto->turnAngle(15_deg);
+  chassisauto->waitUntilSettled();
+
+  fast->generatePath({
+  	{0_ft, 0_ft, 0_deg},
+  	{2_ft, 0_ft, 0_deg}},
+		"Intake Cube 6"
+  );
+
+  fast->setTarget("Intake Cube 6");
+  fast->waitUntilSettled();
+
+  chassisauto->turnAngle(-15_deg);
+  chassisauto->waitUntilSettled();
+
+  slow->generatePath({
+    {0_ft, 0_ft, 0_deg},
+    {3_ft, 0_ft, 0_deg}},
+    "Cube Line 2"
+  );
+
+  slow->setTarget("Cube Line 2");
+  slow->waitUntilSettled();
+  intake_left.moveVoltage(0);
+  intake_right.moveVoltage(0);
+
+  chassisauto->turnAngle(45_deg);
+  chassisauto->waitUntilSettled();
+
+  fast->generatePath({
+  	{0_ft, 0_ft, 0_deg},
+  	{1.25_ft, 0_ft, 0_deg}},
+		"Drive to Blue"
+  );
+
+  fast->setTarget("Drive to Blue");
+  fast->waitUntilSettled();
+
+  stack_macro();
+  pros::delay(500);
+  release_macro();
+
+  chassisauto->turnAngle(135_deg);
+  chassisauto->waitUntilSettled();
+
+  fast->generatePath({
+  	{0_ft, 0_ft, 0_deg},
+  	{2.25_ft, 0_ft, 0_deg}},
+		"Drive to Second Cube Line"
+  );
+
+  fast->setTarget("Drive to Second Cube Line");
+  fast->waitUntilSettled();
+
+  chassisauto->turnAngle(90_deg);
+  chassisauto->waitUntilSettled();
+
+  intake_left.moveVoltage(12000);
+  intake_right.moveVoltage(12000);
+
+  slow->generatePath({
+  	{0_ft, 0_ft, 0_deg},
+  	{3_ft, 0_ft, 0_deg}},
+		"Intake 2nd Line Part 1"
+  );
+
+  slow->setTarget("Intake 2nd Line Part 1");
+  slow->waitUntilSettled();
+
+  fast->generatePath({
+    {0_ft, 0_ft, 0_deg},
+    {2_ft, 0_ft, 0_deg}},
+    "Drive to 2nd Line part 2"
+  );
+
+  fast->setTarget("Drive to 2nd Line part 2");
+  fast->waitUntilSettled();
+
+  slow->generatePath({
+  	{0_ft, 0_ft, 0_deg},
+  	{2_ft, 0_ft, 0_deg}},
+		"Intake 2nd Line Part 2"
+  );
+
+  slow->setTarget("Intake 2nd Line Part 2");
+  slow->waitUntilSettled();
+
+  intake_left.moveVoltage(0);
+  intake_right.moveVoltage(0);
+
+  chassisauto->turnAngle(90_deg);
+  chassisauto->waitUntilSettled();
+
+  fast->generatePath({
+    {0_ft, 0_ft, 0_deg},
+    {2_ft, 0_ft, 0_deg}},
+    "Drive to Tower One"
+  );
+
+  fast->setTarget("Drive to Tower One");
+  fast->waitUntilSettled();
+
+  liftControl->setTarget(1800);
+  pros::delay(150);
+  setIntake(-127);
+  pros::delay(200);
+  setIntake(0);
+
+  //outtake into tower one
+  intake_left.moveRelative(-620, 200);
+	intake_right.moveRelative(-620, 200);
+
+  liftControl->setTarget(0);
+
+  chassisauto->turnAngle(-135_deg);
+  chassisauto->waitUntilSettled();
+
+  fast->generatePath({
+    {0_ft, 0_ft, 0_deg},
+    {2_ft, 0_ft, 0_deg}},
+    "Drive to Tower 2"
+  );
+
+  fast->setTarget("Drive to Tower 2");
+  fast->waitUntilSettled();
+
+  liftControl->setTarget(1800);
+  pros::delay(150);
+  setIntake(-127);
+  pros::delay(200);
+  setIntake(0);
+
+  //outtake into tower one
+  intake_left.moveRelative(-620, 200);
+	intake_right.moveRelative(-620, 200);
+
+  liftControl->setTarget(0);
+
+  chassisauto->turnAngle(90_deg);
+  chassisauto->waitUntilSettled();
+
+  fast->generatePath({
+    {0_ft, 0_ft, 0_deg},
+    {3_ft, 0_ft, 0_deg}},
+    "Drive to Tower 3"
+  );
+
+  fast->setTarget("Drive to Tower 3");
+  fast->waitUntilSettled();
+
+
+  liftControl->setTarget(1800);
+  pros::delay(150);
+  setIntake(-127);
+  pros::delay(200);
+  setIntake(0);
+
+  //outtake into tower one
+  intake_left.moveRelative(-620, 200);
+	intake_right.moveRelative(-620, 200);
+
+  liftControl->setTarget(0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+void blue_small_zone()
+{
+  deploy_small_side();
 
 	slow->generatePath({
-		{0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
-		{3.1_ft, 0_ft, 0_deg}}, // The next point in the profile, 3 feet forwardx
+		{0_ft, 0_ft, 0_deg},
+		{3.1_ft, 0_ft, 0_deg}},
 		"Cube Line"
 	);
 
@@ -255,38 +454,7 @@ void blue_small_zone(){
 }
 
 void red_small_zone(){
-	angler.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-
-	lift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-
-	lift = -4;
-
-	fast->generatePath({
-		{0_ft, 0_ft, 0_deg},
-		{1_ft, 0_ft, 0_deg}},
-		"Push Cube"
-	);
-
-	fast->setTarget("Push Cube");
-	fast->waitUntilSettled();
-
-
-	fast->generatePath({
-		{0_ft, 0_ft, 0_deg},
-		{0.75_ft, 0_ft, 0_deg}},
-		"align on wall"
-	);
-
-	fast->setTarget("align on wall",1);
-	fast->waitUntilSettled();
-
-	intake_left.moveVoltage(-12000);
-	intake_right.moveVoltage(-12000);
-	pros::delay(300);
-	intake_left.moveVoltage(0);
-	intake_right.moveVoltage(0);
-	pros::delay(400);
-	antitip_deploy();
+deploy_small_side();
 
 	slow->generatePath({
 	  {0_ft, 0_ft, 0_deg},  // Profile starting position, this will normally be (0, 0, 0)
