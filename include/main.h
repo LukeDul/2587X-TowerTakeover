@@ -76,7 +76,7 @@ void opcontrol(void);
 #include "subsystemHeaders/angler.hpp"
 #include "subsystemHeaders/lift.hpp"
 #include "subsystemHeaders/intake.hpp"
-#include "subsystemHeaders/globals.hpp"
+#include "globals.hpp"
 /**
  * You can add C++-only headers here
  */
