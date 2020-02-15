@@ -258,15 +258,22 @@ tenstack->generatePath({
 		"8 Stack"
 	);
 
+  intake_left.moveVoltage(12000);
+  intake_right.moveVoltage(12000);
 
-intake_left.moveRelative(21500, 200);
-intake_right.moveRelative(21500, 200);
 
 
 tenstack->setTarget("8 Stack");
-  tenstack->waitUntilSettled();
+tenstack->waitUntilSettled();
+pros::delay(1000);
+intake_left.moveVoltage(0);
+intake_right.moveVoltage(0);
 
-  pros::delay(500);
+intakeLeft.set_brake_mode				(pros::E_MOTOR_BRAKE_HOLD);
+intakeRight.set_brake_mode			(pros::E_MOTOR_BRAKE_HOLD);
+
+  intake_left.moveRelative(5000, 200);
+  intake_right.moveRelative(5000, 200);
 
   tenstack->generatePath({
   		{0_ft, 0_ft, 0_deg},
@@ -284,7 +291,7 @@ tenstack->setTarget("8 Stack");
 
   tenstack->generatePath({
     {0_ft, 0_ft, 0_deg},
-    {1.1_ft, 0_ft, 0_deg}},
+    {0.9_ft, 0_ft, 0_deg}},
     "AfterStack"
   );
 
@@ -293,12 +300,12 @@ tenstack->setTarget("8 Stack");
 
 
 
-  chassisauto->turnAngle(45_deg);
+  chassisauto->turnAngle(40_deg);
   chassisauto->waitUntilSettled();
 
   tenstack->generatePath({
   	{0_ft, 0_ft, 0_deg},
-  	{1.25_ft, 0_ft, 0_deg}},
+  	{1.4_ft, 0_ft, 0_deg}},
 		"Drive to Blue"
   );
 
