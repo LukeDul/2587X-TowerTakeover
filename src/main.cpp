@@ -134,6 +134,44 @@ auto liftControl = okapi::AsyncPosControllerBuilder()
 		.build();
 const int heights[NUM_HEIGHTS] = {height1, height2};
 
+auto chassisauto = okapi::ChassisControllerBuilder()
+		.withMotors({frontLeft, backLeft}, {frontRight, backRight})
+		.withGains(
+			 {0.001, 0.001, 0.00009}, // Distance controller gains 0.005, 0, 0.001
+			 {0.0026, 0.0007, 0.0001}, // Turn controller gains .00075	 {0.00075, 0.0007, 0.00009}
+			 {0.001, 0.001, 0.0001}  // Angle controller gains (helps drive straight)
+		 )
+		.withDimensions(AbstractMotor::gearset::green, {{4.125_in, 8.875_in}, okapi::imev5GreenTPR})//9.1
+		.withOdometry() // use the same scales as the chassis (above)
+		.withMaxVelocity(200)
+		.buildOdometry(); // build an odometry chassis
+
+auto myChassis =
+  okapi::ChassisControllerBuilder()
+    .withMotors({frontLeft, backLeft}, {frontRight, backRight})
+    .withDimensions(okapi::AbstractMotor::gearset::green, {{4.125_in, 13.21875_in}, okapi::imev5GreenTPR})
+    .build();
+
+		auto fast =
+		  AsyncMotionProfileControllerBuilder()
+		    .withLimits({
+		      1.1,  //max velocity
+		      2.5,  //max acceleration
+		      10.0  //max jerk
+		    })
+		    .withOutput(myChassis)
+		    .buildMotionProfileController();
+
+		auto slow =
+		  AsyncMotionProfileControllerBuilder()
+		    .withLimits({
+		      0.25,  //max velocity
+		      2.0,  //max acceleration
+		      10.0  //max jerk
+		    })
+		    .withOutput(myChassis)
+		    .buildMotionProfileController();
+
 void blue_small_zone(){
 	angler.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
