@@ -28,4 +28,14 @@ extern pros::ADIPotentiometer anglerPot;
 //****************************|Controller|**************************
 extern pros::Controller controller;
 
+//****************************|Controller|**************************
+
+extern okapi::ChassisControllerBuilder chassisauto;
+
+extern okapi::ChassisControllerBuilder myChassis;
+
+extern okapi::AsyncMotionProfileControllerBuilder fast;
+
+extern okapi::AsyncMotionProfileControllerBuilder slow;
+
 #endif
