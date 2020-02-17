@@ -341,6 +341,101 @@ void red_big_zone(){
 }
 
 void blue_big_zone(){
+  // angler.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+  //
+  // lift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+  //
+  // lift = -4;
+  //
+  // fast->generatePath({
+  //   {0_ft, 0_ft, 0_deg},
+  //   {1_ft, 0_ft, 0_deg}},
+  //   "Push Cube"
+  // );
+  //
+  // fast->setTarget("Push Cube");
+  // fast->waitUntilSettled();
+  //
+  //
+  // fast->generatePath({
+  //   {0_ft, 0_ft, 0_deg},
+  //   {0.75_ft, 0_ft, 0_deg}},
+  //   "align on wall"
+  // );
+  //
+  // fast->setTarget("align on wall",1);
+  // fast->waitUntilSettled();
+  //
+  // intake_left.moveVoltage(-12000);
+  // intake_right.moveVoltage(-12000);
+  // pros::delay(300);
+  // intake_left.moveVoltage(0);
+  // intake_right.moveVoltage(0);
+  // pros::delay(400);
+  // antitip_deploy();
+
+  fast->generatePath({
+		{0_ft, 0_ft, 0_deg},
+		{2_ft, 0_ft, 0_deg}},
+		"First two"
+	);
+
+	intake_left.moveVoltage(12000);
+	intake_right.moveVoltage(12000);
+
+	lift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
+	fast->setTarget("First two");
+	fast->waitUntilSettled();
+
+  chassisauto->turnAngle(-18_deg);
+  chassisauto->waitUntilSettled();
+
+  fast->generatePath({
+    {0_ft, 0_ft, 0_deg},
+    {2_ft, 0_ft, 0_deg}},
+    "3"
+  );
+
+  fast->setTarget("3");
+  fast->waitUntilSettled();
+
+  fast->generatePath({
+    {0_ft, 0_ft, 0_deg},
+    {3_ft, 0_ft, 0_deg}},
+    "back"
+  );
+
+  fast->setTarget("back",1);
+  fast->waitUntilSettled();
+
+    chassisauto->turnAngle(-80_deg);
+    chassisauto->waitUntilSettled();
+
+    slow->generatePath({
+      {0_ft, 0_ft, 0_deg},
+      {2.5_ft, 0_ft, 0_deg}},
+      "4"
+    );
+
+  slow->setTarget("4");
+    slow->waitUntilSettled();
+    //
+    // fast->generatePath({
+    //   {0_ft, 0_ft, 0_deg},
+    //   {3_ft, 0_ft, 0_deg}},
+    //   "back two"
+    // );
+    //
+    // fast->setTarget("back two",1);
+    // fast->waitUntilSettled();
+    //
+    // chassisauto->turnAngle(-145_deg);
+    // chassisauto->waitUntilSettled();
+
+
+
+
 
 }
 
@@ -363,8 +458,9 @@ void autonomous()
 	// }
 
 	//blue_small_zone();
-	red_small_zone();
+	//red_small_zone();
 //	one_point();
+blue_big_zone();
 }
 //****************************|Operation Control|****************************
 
