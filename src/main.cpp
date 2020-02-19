@@ -116,8 +116,8 @@ void outtake_stack()
 
 void outtake_nine_stack()
 {
-	intake_left.moveRelative(-545, 200);
-	intake_right.moveRelative(-545, 200);
+	intake_left.moveRelative(-600, 200);
+	intake_right.moveRelative(-600, 200);
   pros::delay(700);
   intake_left.moveRelative(300, 200);
   intake_right.moveRelative(300, 200);
@@ -157,6 +157,18 @@ auto chassisauto = okapi::ChassisControllerBuilder()
 		.withMaxVelocity(200)
 		.buildOdometry(); // build an odometry chassis
 
+    auto towerturns = okapi::ChassisControllerBuilder()
+    		.withMotors({frontLeft, backLeft}, {frontRight, backRight})
+    		.withGains(
+    			 {0.001, 0.001, 0.00009}, // Distance controller gains 0.005, 0, 0.001
+    			 {0.0026, 0.0007, 0.0001}, // Turn controller gains .00075	 {0.00075, 0.0007, 0.00009}
+    			 {0.001, 0.001, 0.0001}  // Angle controller gains (helps drive straight)
+    		 )
+    		.withDimensions(AbstractMotor::gearset::green, {{4.125_in, 8.875_in}, okapi::imev5GreenTPR})//9.1
+    		.withOdometry() // use the same scales as the chassis (above)
+    		.withMaxVelocity(50)
+    		.buildOdometry(); // build an odometry chassis
+
 auto myChassis =
   okapi::ChassisControllerBuilder()
     .withMotors({frontLeft, backLeft}, {frontRight, backRight})
@@ -191,6 +203,17 @@ auto myChassis =
     		    })
     		    .withOutput(myChassis)
     		    .buildMotionProfileController();
+
+  void lift_low(){
+    liftControl->setTarget(1800);
+    pros::delay(100);
+    setIntake(-127);
+    pros::delay(150);
+    setIntake(0);
+  }
+void lift_down(){
+  liftControl->setTarget(0);
+}
 
 void deploy_small_side(){
   angler.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -227,6 +250,42 @@ void deploy_small_side(){
 	antitip_deploy();
 }
 
+void tower(){
+ lift_low();
+ pros::delay(2000);
+
+ intake_left.moveVoltage(-11000);
+ intake_right.moveVoltage(-11000);
+ pros::delay(500);
+ intake_left.moveVoltage(0);
+ intake_right.moveVoltage(0);
+ lift_down();
+
+}
+
+void tower2(){
+ lift_low();
+ pros::delay(2000);
+
+ tenstack->generatePath({
+ 		{0_ft, 0_ft, 0_deg},
+ 		{1_ft, 0_ft, 0_deg}},
+ 		"bruh"
+ 	);
+
+
+   tenstack->setTarget("bruh");
+   tenstack->waitUntilSettled();
+
+ intake_left.moveVoltage(-5000);
+ intake_right.moveVoltage(-5000);
+ tenstack->setTarget("bruh",1);
+ tenstack->waitUntilSettled();
+ intake_left.moveVoltage(0);
+ intake_right.moveVoltage(0);
+
+
+}
 
 
 
@@ -235,6 +294,8 @@ void deploy_small_side(){
 //***************************************************************************************************
 void programmingSkillz()
 {
+
+
   intakeLeft.set_brake_mode				(pros::E_MOTOR_BRAKE_HOLD);
   intakeRight.set_brake_mode			(pros::E_MOTOR_BRAKE_HOLD);
   angler.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
@@ -354,144 +415,99 @@ void programmingSkillz()
 
   intakeLeft.set_brake_mode				(pros::E_MOTOR_BRAKE_COAST);
   intakeRight.set_brake_mode			(pros::E_MOTOR_BRAKE_COAST);
+
   angler.set_brake_mode				(pros::E_MOTOR_BRAKE_BRAKE);
   pros::delay(500);
   stack_macro();
   pros::delay(1000);
   release_macro();
-  //
-  // chassisauto->turnAngle(135_deg);
-  // chassisauto->waitUntilSettled();
-  //
-  // fast->generatePath({
-  // 	{0_ft, 0_ft, 0_deg},
-  // 	{2.25_ft, 0_ft, 0_deg}},
-	// 	"Drive to Second Cube Line"
-  // );
-  //
-  // fast->setTarget("Drive to Second Cube Line");
-  // fast->waitUntilSettled();
-  //
-  // chassisauto->turnAngle(90_deg);
-  // chassisauto->waitUntilSettled();
-  //
-  // intake_left.moveVoltage(12000);
-  // intake_right.moveVoltage(12000);
-  //
-  // slow->generatePath({
-  // 	{0_ft, 0_ft, 0_deg},
-  // 	{3_ft, 0_ft, 0_deg}},
-	// 	"Intake 2nd Line Part 1"
-  // );
-  //
-  // slow->setTarget("Intake 2nd Line Part 1");
-  // slow->waitUntilSettled();
-  //
-  // fast->generatePath({
-  //   {0_ft, 0_ft, 0_deg},
-  //   {2_ft, 0_ft, 0_deg}},
-  //   "Drive to 2nd Line part 2"
-  // );
-  //
-  // fast->setTarget("Drive to 2nd Line part 2");
-  // fast->waitUntilSettled();
-  //
-  // slow->generatePath({
-  // 	{0_ft, 0_ft, 0_deg},
-  // 	{2_ft, 0_ft, 0_deg}},
-	// 	"Intake 2nd Line Part 2"
-  // );
-  //
-  // slow->setTarget("Intake 2nd Line Part 2");
-  // slow->waitUntilSettled();
-  //
-  // intake_left.moveVoltage(0);
-  // intake_right.moveVoltage(0);
-  //
-  // chassisauto->turnAngle(90_deg);
-  // chassisauto->waitUntilSettled();
-  //
-  // fast->generatePath({
-  //   {0_ft, 0_ft, 0_deg},
-  //   {2_ft, 0_ft, 0_deg}},
-  //   "Drive to Tower One"
-  // );
-  //
-  // fast->setTarget("Drive to Tower One");
-  // fast->waitUntilSettled();
-  //
-  // liftControl->setTarget(1800);
-  // pros::delay(150);
-  // setIntake(-127);
-  // pros::delay(200);
-  // setIntake(0);
-  //
-  // //outtake into tower one
-  // intake_left.moveRelative(-620, 200);
-	// intake_right.moveRelative(-620, 200);
-  //
-  // liftControl->setTarget(0);
-  //
-  // chassisauto->turnAngle(-135_deg);
-  // chassisauto->waitUntilSettled();
-  //
-  // fast->generatePath({
-  //   {0_ft, 0_ft, 0_deg},
-  //   {2_ft, 0_ft, 0_deg}},
-  //   "Drive to Tower 2"
-  // );
-  //
-  // fast->setTarget("Drive to Tower 2");
-  // fast->waitUntilSettled();
-  //
-  // liftControl->setTarget(1800);
-  // pros::delay(150);
-  // setIntake(-127);
-  // pros::delay(200);
-  // setIntake(0);
-  //
-  // //outtake into tower one
-  // intake_left.moveRelative(-620, 200);
-	// intake_right.moveRelative(-620, 200);
-  //
-  // liftControl->setTarget(0);
-  //
-  // chassisauto->turnAngle(90_deg);
-  // chassisauto->waitUntilSettled();
-  //
-  // fast->generatePath({
-  //   {0_ft, 0_ft, 0_deg},
-  //   {3_ft, 0_ft, 0_deg}},
-  //   "Drive to Tower 3"
-  // );
-  //
-  // fast->setTarget("Drive to Tower 3");
-  // fast->waitUntilSettled();
-  //
-  //
-  // liftControl->setTarget(1800);
-  // pros::delay(150);
-  // setIntake(-127);
-  // pros::delay(200);
-  // setIntake(0);
-  //
-  // //outtake into tower one
-  // intake_left.moveRelative(-620, 200);
-	// intake_right.moveRelative(-620, 200);
-  //
-  // liftControl->setTarget(0);
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
 
+
+
+  towerturns->turnAngle(-153_deg);
+  towerturns->waitUntilSettled();
+
+
+  intake_left.moveVoltage(12000);
+  intake_right.moveVoltage(12000);
+
+slow->generatePath({
+  	{0_ft, 0_ft, 0_deg},
+  	{2.5_ft, 0_ft, 0_deg}},
+		"1st"
+  );
+
+  slow->setTarget("1st");
+  slow->waitUntilSettled();
+
+  fast->generatePath({
+  	{0_ft, 0_ft, 0_deg},
+  	{2.5_ft, 0_ft, 0_deg}},
+		"2nd"
+  );
+
+  fast->setTarget("2nd",1);
+  fast->waitUntilSettled();
+
+  intake_left.moveVoltage(0);
+  intake_right.moveVoltage(0);
+
+  towerturns->turnAngle(232_deg);
+  towerturns->waitUntilSettled();
+
+  fast->generatePath({
+    {0_ft, 0_ft, 0_deg},
+    {2_in, 0_ft, 0_deg}},
+    "idk"
+  );
+
+  fast->setTarget("idk");
+  fast->waitUntilSettled();
+
+pros::delay(500);
+
+  tower2();
+
+  lift_down();
+
+  fast->generatePath({
+    {0_ft, 0_ft, 0_deg},
+    {1.1_ft, 0_ft, 0_deg}},
+    "hmm"
+  );
+
+  fast->setTarget("hmm",1);
+  fast->waitUntilSettled();
+
+  towerturns->turnAngle(75_deg);
+  towerturns->waitUntilSettled();
+
+  intake_left.moveVoltage(12000);
+  intake_right.moveVoltage(12000);
+
+  tenstack->generatePath({
+    {0_ft, 0_ft, 0_deg},
+    {2.7_ft, 0_ft, 0_deg}},
+    "bro"
+  );
+
+  tenstack->setTarget("bro");
+  tenstack->waitUntilSettled();
+
+  tenstack->generatePath({
+    {0_ft, 0_ft, 0_deg},
+    {0.2_ft, 0_ft, 0_deg}},
+    "hmhmmhm"
+  );
+
+  tenstack->setTarget("hmhmmhm",1);
+  tenstack->waitUntilSettled();
+
+  intake_left.moveVoltage(0);
+  intake_right.moveVoltage(0);
+
+
+  tower2();
 
 }
 
