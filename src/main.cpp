@@ -114,6 +114,19 @@ void outtake_stack()
 	intake_right.moveRelative(-620, 200);
 }
 
+void outtake_nine_stack()
+{
+	intake_left.moveRelative(-3000, 100);
+	intake_right.moveRelative(-3000, 100);
+  pros::delay(500);
+  intake_left.moveVoltage(-12000);
+	intake_right.moveVoltage(-12000);
+	pros::delay(200);
+	intake_left.moveVoltage(0);
+	intake_right.moveVoltage(0);
+
+}
+
 
 
 
@@ -215,105 +228,137 @@ void deploy_small_side(){
 	pros::delay(400);
 	antitip_deploy();
 }
-void programmingSkills()
+
+
+
+
+
+
+//***************************************************************************************************
+void programmingSkillz()
 {
-  intakeLeft.set_brake_mode				(pros::E_MOTOR_BRAKE_HOLD);
-  intakeRight.set_brake_mode			(pros::E_MOTOR_BRAKE_HOLD);
-  angler.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	lift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-
-
-  lift = -4;
-
-  slow->generatePath({
-    {0_ft, 0_ft, 0_deg},
-    {1_ft, 0_ft, 0_deg}},
-    "Push Cube"
-  );
-
-  slow->setTarget("Push Cube");
-  slow->waitUntilSettled();
-
-
-  slow->generatePath({
-    {0_ft, 0_ft, 0_deg},
-    {0.75_ft, 0_ft, 0_deg}},
-    "align on wall"
-  );
-
-  slow->setTarget("align on wall",1);
-  slow->waitUntilSettled();
-
-  intake_left.moveVoltage(-12000);
-  intake_right.moveVoltage(-12000);
-  pros::delay(300);
-  intake_left.moveVoltage(0);
-  intake_right.moveVoltage(0);
-  pros::delay(400);
-  antitip_deploy();
-
-tenstack->generatePath({
-		{0_ft, 0_ft, 0_deg},
-		{7.3_ft, 0_ft, 0_deg}},
-		"8 Stack"
-	);
-
-  intake_left.moveVoltage(12000);
-  intake_right.moveVoltage(12000);
-
-
-
-tenstack->setTarget("8 Stack");
-tenstack->waitUntilSettled();
-pros::delay(1000);
-intake_left.moveVoltage(0);
-intake_right.moveVoltage(0);
-
-intakeLeft.set_brake_mode				(pros::E_MOTOR_BRAKE_HOLD);
-intakeRight.set_brake_mode			(pros::E_MOTOR_BRAKE_HOLD);
-
-  intake_left.moveRelative(5000, 200);
-  intake_right.moveRelative(5000, 200);
-
-  tenstack->generatePath({
-  		{0_ft, 0_ft, 0_deg},
-  		{1_ft, 0_ft, 0_deg}},
-  		"2 Stack"
-  	);
-    tenstack->setTarget("2 Stack");
-      tenstack->waitUntilSettled();
-
-
-  intakeLeft.set_brake_mode				(pros::E_MOTOR_BRAKE_HOLD);
-  intakeRight.set_brake_mode			(pros::E_MOTOR_BRAKE_HOLD);
-
-  lift = 0;
-
-  tenstack->generatePath({
-    {0_ft, 0_ft, 0_deg},
-    {0.9_ft, 0_ft, 0_deg}},
-    "AfterStack"
-  );
-
-  	tenstack->setTarget("AfterStack");
-    tenstack->waitUntilSettled();
-
-
-
-  chassisauto->turnAngle(40_deg);
-  chassisauto->waitUntilSettled();
+  // intakeLeft.set_brake_mode				(pros::E_MOTOR_BRAKE_HOLD);
+  // intakeRight.set_brake_mode			(pros::E_MOTOR_BRAKE_HOLD);
+  // angler.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	// lift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+  //
+  //
+  // lift = -4;
+  //
+  // slow->generatePath({
+  //   {0_ft, 0_ft, 0_deg},
+  //   {1_ft, 0_ft, 0_deg}},
+  //   "Push Cube"
+  // );
+  //
+  // slow->setTarget("Push Cube");
+  // slow->waitUntilSettled();
+  // antitip_deploy();
+  //
+  // slow->generatePath({
+  //   {0_ft, 0_ft, 0_deg},
+  //   {0.75_ft, 0_ft, 0_deg}},
+  //   "align on wall"
+  // );
+  //
+  // slow->setTarget("align on wall",1);
+  // slow->waitUntilSettled();
+  //
+  // intake_left.moveVoltage(-12000);
+  // intake_right.moveVoltage(-12000);
+  // pros::delay(300);
+  // intake_left.moveVoltage(0);
+  // intake_right.moveVoltage(0);
+  // pros::delay(400);
+  //
+  //
+  // intake_left.moveVoltage(12000);
+  // intake_right.moveVoltage(12000);
+  //
+  // tenstack->generatePath({
+  // 		{0_ft, 0_ft, 0_deg},
+  // 		{4.5_ft, 0_ft, 0_deg}},
+  // 		"4 cube"
+  // 	);
+  //
+  //
+  //   tenstack->setTarget("4 cube");
+  //   tenstack->waitUntilSettled();
+  //
+  //   pros::delay(1000);
+  //
+  //   intake_left.moveVoltage(0);
+  //   intake_right.moveVoltage(0);
+  //
+  //   fast->generatePath({
+  //         {0_ft, 0_ft, 0_deg},
+  //         {0.5_ft, 0_ft, 0_deg}},
+  //         "tonext"
+  //       );
+  //
+  //     fast->setTarget("tonext");
+  //     fast->waitUntilSettled();
+  //
+  //     intake_left.moveVoltage(12000);
+  //     intake_right.moveVoltage(12000);
+  //
+  // slow->generatePath({
+  //       {0_ft, 0_ft, 0_deg},
+  //       {3_ft, 0_ft, 0_deg}},
+  //       "middle"
+  //     );
+  //
+  //
+  //   slow->setTarget("middle");
+  //   slow->waitUntilSettled();
+  //
+  //
+  //
+  //   intakeLeft.set_brake_mode				(pros::E_MOTOR_BRAKE_HOLD);
+  //   intakeRight.set_brake_mode			(pros::E_MOTOR_BRAKE_HOLD);
+  //
+  // pros::delay(1000);
+  //
+  //     tenstack->generatePath({
+  // 		{0_ft, 0_ft, 0_deg},
+  // 		{1.25_ft, 0_ft, 0_deg}},
+  // 		"after"
+  // 	);
+  //   tenstack->setTarget("after");
+  //   tenstack->waitUntilSettled();
+  //
+  //   intake_left.moveVoltage(0);
+  //   intake_right.moveVoltage(0);
+  //
+  //
+  // intakeLeft.set_brake_mode				(pros::E_MOTOR_BRAKE_HOLD);
+  // intakeRight.set_brake_mode			(pros::E_MOTOR_BRAKE_HOLD);
+  //
+  // lift = 0;
+  //
+  //
+  //
+  // chassisauto->turnAngle(40_deg);
+  // chassisauto->waitUntilSettled();
+  //
+  //
 
   tenstack->generatePath({
   	{0_ft, 0_ft, 0_deg},
-  	{1.4_ft, 0_ft, 0_deg}},
+  	{1.7_ft, 0_ft, 0_deg}},
 		"Drive to Blue"
   );
 
   tenstack->setTarget("Drive to Blue");
   tenstack->waitUntilSettled();
 
+  outtake_nine_stack();
+
+  intakeLeft.set_brake_mode				(pros::E_MOTOR_BRAKE_COAST);
+  intakeRight.set_brake_mode			(pros::E_MOTOR_BRAKE_COAST);
+pros::delay(500);
   stack_macro();
-  pros::delay(500);
+  pros::delay(1000);
   release_macro();
   //
   // chassisauto->turnAngle(135_deg);
@@ -584,7 +629,8 @@ void autonomous()
 //	red_small_zone();
 //	one_point();
 
-programmingSkills();
+
+programmingSkillz();
 }
 //****************************|Operation Control|****************************
 

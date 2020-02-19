@@ -223,6 +223,27 @@ void auton_release(){
   setDrive(0,0);
 }
 
+void prog_release(){
+
+  double anglerFinal = 3000;
+
+  while(anglerPosition()>anglerFinal)
+  {
+    setIntake(-60);
+
+    setDrive(-30, -30);
+
+    set_angler(-127);
+
+    pros::delay(10);
+  }
+
+  stop_angler();
+
+  setIntake(0);
+
+  setDrive(0,0);
+}
 //****************************|Angler Operation Control|****************************
 //pros::E_CONTROLLER_DIGITAL_X up
 //pros::E_CONTROLLER_DIGITAL_B down

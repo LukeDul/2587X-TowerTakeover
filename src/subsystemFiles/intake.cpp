@@ -6,7 +6,6 @@ void setIntake(int power){
 	intakeLeft = power;
 }
 
-
 //****************************|Operation Control Function|********************************
 void intakeControl()
 {
