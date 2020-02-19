@@ -270,22 +270,50 @@ void tower2(){
  tenstack->generatePath({
  		{0_ft, 0_ft, 0_deg},
  		{1_ft, 0_ft, 0_deg}},
- 		"bruh"
+ 		"oo"
  	);
 
-
-   tenstack->setTarget("bruh");
+   tenstack->setTarget("oo");
    tenstack->waitUntilSettled();
 
  intake_left.moveVoltage(-5000);
  intake_right.moveVoltage(-5000);
- tenstack->setTarget("bruh",1);
+ tenstack->setTarget("oo",1);
  tenstack->waitUntilSettled();
  intake_left.moveVoltage(0);
  intake_right.moveVoltage(0);
 
 
 }
+void tower3(){
+ lift_low();
+ pros::delay(2000);
+
+ tenstack->generatePath({
+ 		{0_ft, 0_ft, 0_deg},
+ 		{1.2_ft, 0_ft, 0_deg}},
+ 		"o1o"
+ 	);
+
+   tenstack->setTarget("o1o");
+   tenstack->waitUntilSettled();
+
+ intake_left.moveVoltage(-5000);
+ intake_right.moveVoltage(-5000);
+ tenstack->setTarget("o1o",1);
+ tenstack->waitUntilSettled();
+ intake_left.moveVoltage(0);
+ intake_right.moveVoltage(0);
+
+
+}
+
+
+
+
+
+
+
 
 
 
@@ -404,7 +432,7 @@ void programmingSkillz()
 
   tenstack->generatePath({
   	{0_ft, 0_ft, 0_deg},
-  	{1.7_ft, 0_ft, 0_deg}},
+  	{1.55_ft, 0_ft, 0_deg}},
 		"Drive to Blue"
   );
 
@@ -424,7 +452,7 @@ void programmingSkillz()
 
 
 
-  towerturns->turnAngle(-153_deg);
+  towerturns->turnAngle(-151_deg);
   towerturns->waitUntilSettled();
 
 
@@ -479,7 +507,7 @@ pros::delay(500);
   fast->setTarget("hmm",1);
   fast->waitUntilSettled();
 
-  towerturns->turnAngle(75_deg);
+  towerturns->turnAngle(77_deg);
   towerturns->waitUntilSettled();
 
   intake_left.moveVoltage(12000);
@@ -496,7 +524,7 @@ pros::delay(500);
 
   tenstack->generatePath({
     {0_ft, 0_ft, 0_deg},
-    {0.2_ft, 0_ft, 0_deg}},
+    {0.3_ft, 0_ft, 0_deg}},
     "hmhmmhm"
   );
 
@@ -507,7 +535,7 @@ pros::delay(500);
   intake_right.moveVoltage(0);
 
 
-  tower2();
+  tower3();
 
 }
 
