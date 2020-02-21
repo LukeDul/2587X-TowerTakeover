@@ -406,6 +406,20 @@ void opcontrol()
 
 		 }
 
+     if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)){
+     	antitip_deploy();
+    	set_angler(0);
+      driveLeftBack.set_brake_mode		(pros::E_MOTOR_BRAKE_HOLD);
+    	driveLeftFront.set_brake_mode		(pros::E_MOTOR_BRAKE_HOLD);
+    	driveRightBack.set_brake_mode		(pros::E_MOTOR_BRAKE_HOLD);
+    	driveRightFront.set_brake_mode	(pros::E_MOTOR_BRAKE_HOLD);
+    	angler.set_brake_mode						(pros::E_MOTOR_BRAKE_HOLD);
+    	intakeLeft.set_brake_mode				(pros::E_MOTOR_BRAKE_HOLD);
+    	intakeRight.set_brake_mode			(pros::E_MOTOR_BRAKE_HOLD);
+     }
+
+
+
 		pros::lcd::print(0, "Angler val: %f", anglerPosition());
 		pros::lcd::print(1, "Lift val: %f", liftPosition());
 
