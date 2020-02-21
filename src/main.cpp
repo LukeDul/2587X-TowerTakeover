@@ -116,11 +116,11 @@ void outtake_stack()
 
 void outtake_nine_stack()
 {
-	intake_left.moveRelative(-600, 200);
-	intake_right.moveRelative(-600, 200);
-  pros::delay(700);
-  intake_left.moveRelative(300, 200);
-  intake_right.moveRelative(300, 200);
+	intake_left.moveRelative(-700, 50);
+	intake_right.moveRelative(-700, 50);
+  // pros::delay(2000);
+  // intake_left.moveRelative(300, 200);
+  // intake_right.moveRelative(300, 200);
 
 
 }
@@ -425,7 +425,7 @@ void programmingSkillz()
 
 
 
-  chassisauto->turnAngle(40_deg);
+  chassisauto->turnAngle(41_deg);
   chassisauto->waitUntilSettled();
 
 
@@ -452,7 +452,7 @@ void programmingSkillz()
 
 
 
-  towerturns->turnAngle(-151_deg);
+  towerturns->turnAngle(-149_deg);
   towerturns->waitUntilSettled();
 
 
@@ -485,7 +485,7 @@ slow->generatePath({
 
   fast->generatePath({
     {0_ft, 0_ft, 0_deg},
-    {2_in, 0_ft, 0_deg}},
+    {1_in, 0_ft, 0_deg}},
     "idk"
   );
 
