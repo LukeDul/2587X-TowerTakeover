@@ -1,5 +1,5 @@
 #include "main.h"
-okapi::Motor intake_left(5);
+okapi::Motor intake_left(20);
 okapi::Motor intake_right(4);
 
 bool runRedSmallZone = false;
