@@ -464,8 +464,8 @@ void autonomous()
 	// 	one_point();
 	// }
 
-	blue_small_zone();
-	//red_small_zone();
+//	blue_small_zone();
+	red_small_zone();
 //	one_point();
 //red_small_zone();
 }
