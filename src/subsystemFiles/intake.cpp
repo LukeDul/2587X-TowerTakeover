@@ -14,6 +14,7 @@ void intakeControl()
   if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2))
   {
     setIntake(127);
+    lift = -8;
   }
   else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1))
   {

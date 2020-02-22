@@ -177,7 +177,7 @@ void blue_small_zone(){
 
 	lift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
-	lift = -4;
+	lift = -8;
 
 	fast->generatePath({
 		{0_ft, 0_ft, 0_deg},
@@ -460,7 +460,7 @@ void autonomous()
 	//blue_small_zone();
 	//red_small_zone();
 //	one_point();
-blue_big_zone();
+red_small_zone();
 }
 //****************************|Operation Control|****************************
 
