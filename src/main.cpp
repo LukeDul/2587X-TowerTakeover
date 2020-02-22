@@ -330,7 +330,7 @@ void programmingSkillz()
 	lift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
 
-  lift = -4;
+  lift = -8;
 
   slow->generatePath({
     {0_ft, 0_ft, 0_deg},
@@ -452,7 +452,7 @@ void programmingSkillz()
 
 
 
-  towerturns->turnAngle(-149_deg);
+  towerturns->turnAngle(-155_deg);
   towerturns->waitUntilSettled();
 
 
