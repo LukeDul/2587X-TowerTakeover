@@ -69,6 +69,13 @@ void disabled() {}
 void competition_initialize() {}
 
 //****************************|Auton Helper Functions|*********************
+void outtake_nine_stack()
+{
+	intake_left.moveRelative(-700, 50);
+	intake_right.moveRelative(-700, 50);
+
+
+}
 
 //deploys intake and tray
 void tray_intake_deploy()//preload cannot be in front of robot
@@ -457,10 +464,10 @@ void autonomous()
 	// 	one_point();
 	// }
 
-	//blue_small_zone();
+	blue_small_zone();
 	//red_small_zone();
 //	one_point();
-red_small_zone();
+//red_small_zone();
 }
 //****************************|Operation Control|****************************
 
