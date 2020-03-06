@@ -2,6 +2,9 @@
 okapi::Motor intake_left(20);
 okapi::Motor intake_right(4);
 
+okapi::MotorGroup intake {intake_left,intake_right};
+
+
 bool runRedSmallZone = false;
 bool runBlueSmallZone = false;
 bool runOnePointAuton = false;
@@ -82,7 +85,7 @@ void tray_intake_deploy()//preload cannot be in front of robot
 {//delays could be less
 	setIntake(-12000);
 
-	pros::delay(1000);
+	pros::delay(2000);
 
 	setIntake(0);
 
@@ -465,8 +468,8 @@ void autonomous()
 	// }
 
 //	blue_small_zone();
-	red_small_zone();
-//	one_point();
+//	red_small_zone();
+	one_point();
 //red_small_zone();
 }
 //****************************|Operation Control|****************************
@@ -500,10 +503,11 @@ void opcontrol()
 
 	 if (btnUp.changedToPressed()) {
 			 liftControl->setTarget(1800);
-			 pros::delay(150);
-			 setIntake(-127);
-			 pros::delay(200);
-		 }
+			 // pros::delay(150);
+			 // setIntake(-127);
+			 // pros::delay(200);
+       intake.moveRelative(-120, 200);
+     }
 		  else if (btnDown.changedToPressed() ){
 			 ml_down_position();
 
