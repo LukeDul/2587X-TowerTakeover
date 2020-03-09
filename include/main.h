@@ -72,11 +72,24 @@ void opcontrol(void);
 #endif
 
 #ifdef __cplusplus
+//auton headers
+#include "autonHeaders/red_big.hpp"
+#include "autonHeaders/red_small.hpp"
+#include "autonHeaders/blue_big.hpp"
+#include "autonHeaders/blue_small.hpp"
+#include "autonHeaders/programming_skills.hpp"
+#include "autonHeaders/auton_helpers.hpp"
+#include "autonHeaders/one_point.hpp"
+//global headers
+#include "globalHeaders/globals.hpp"
+#include "globalHeaders/controllers.hpp"
+//subsystem headers
 #include "subsystemHeaders/drive.hpp"
 #include "subsystemHeaders/angler.hpp"
 #include "subsystemHeaders/lift.hpp"
 #include "subsystemHeaders/intake.hpp"
-#include "subsystemHeaders/globals.hpp"
+//LCD
+#include "LCD.hpp"
 /**
  * You can add C++-only headers here
  */

@@ -4,63 +4,10 @@ okapi::Motor intake_right(4);
 
 okapi::MotorGroup intake {intake_left,intake_right};
 
-
-bool runRedSmallZone = false;
-bool runBlueSmallZone = false;
-bool runOnePointAuton = false;
-
-void on_left_button() {
-  static bool pressed = false;
-  pressed = !pressed;
-  if (pressed) {
-		runBlueSmallZone = false;
-		runOnePointAuton = false;
-		runRedSmallZone = true;
-    pros::lcd::set_text(2, "Run Red Small Zone");
-
-  } else {
-    pros::lcd::clear_line(2);
-  }
-}
-
-void on_center_button() {
-  static bool pressed = false;
-  pressed = !pressed;
-  if (pressed) {
-    pros::lcd::set_text(2, "Run 1 Point Auton");
-		runOnePointAuton = true;
-		runBlueSmallZone = false;
-		runRedSmallZone = false;
-  } else {
-    pros::lcd::clear_line(2);
-  }
-}
-
-void on_right_button() {
-  static bool pressed = false;
-  pressed = !pressed;
-  if (pressed) {
-    pros::lcd::set_text(2, "Run Blue Small Zone ");
-		runBlueSmallZone = true;
-		runRedSmallZone = false;
-		runOnePointAuton = false;
-  } else {
-    pros::lcd::clear_line(2);
-  }
-}
-
-
 //****************************|Initialize Function|*********************
-//info: Brake shorts the motors, hold uses PID.
 void initialize()
 {
-	pros::lcd::initialize();
-	pros::lcd::register_btn0_cb(on_left_button);
-	pros::lcd::register_btn2_cb(on_right_button);
-	pros::lcd::register_btn1_cb(on_center_button);
-
-
-
+  LCD_init();
 }
 
 //****************************|Disabled Function|*************************
@@ -70,63 +17,6 @@ void disabled() {}
 //****************************|Competition Initialize Function|***********
 
 void competition_initialize() {}
-
-//****************************|Auton Helper Functions|*********************
-void outtake_nine_stack()
-{
-	intake_left.moveRelative(-700, 50);
-	intake_right.moveRelative(-700, 50);
-
-
-}
-
-//deploys intake and tray
-void tray_intake_deploy()//preload cannot be in front of robot
-{//delays could be less
-	setIntake(-12000);
-
-	pros::delay(2000);
-
-	setIntake(0);
-
-	pros::delay(1000);
-}
-
-//deploys anti-tips
-void antitip_deploy()//will not work if against wall
-{//delays could be less
-	move_angler_up(500);
-
-	move_angler_down(0);
-}
-
-//****************************|Auton Functions|****************************
-
-//scores one cube in any zone
-void one_point()
-{//delays could be less
-	tray_intake_deploy();
-
-	translate(300, -127);
-
-	pros::delay(500);
-
-	translate(1000, 127);
-
-	pros::delay(1000);
-
-	antitip_deploy();
-}
-
-void outtake_stack()
-{
-	intake_left.moveRelative(-620, 200);
-	intake_right.moveRelative(-620, 200);
-}
-
-
-
-
 
 const int NUM_HEIGHTS = 2;
 
@@ -450,39 +340,18 @@ void blue_big_zone(){
 }
 
 //****************************|Auton Main|****************************
-//Auton options:
-//blue_small_zone();
-//blue_big_zone();
-//red_small_zone();
-//red_big_zone
-//one_point();
 
 void autonomous()
 {
-	// if(runRedSmallZone == true){
-	// 	red_small_zone();
-	// }else if (runBlueSmallZone == true){
-	// 	blue_small_zone();
-	// }else if(runOnePointAuton == true){
-	// 	one_point();
-	// }
-
-//	blue_small_zone();
-//	red_small_zone();
-	one_point();
-//red_small_zone();
+  LCD_op();
 }
-//****************************|Operation Control|****************************
-
-
-
 
 //****************************|Operation Control|****************************
 
 void opcontrol()
 {
+  set_angler(0);
 	lift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	set_angler(0);
 	driveLeftBack.set_brake_mode		(pros::E_MOTOR_BRAKE_HOLD);
 	driveLeftFront.set_brake_mode		(pros::E_MOTOR_BRAKE_HOLD);
 	driveRightBack.set_brake_mode		(pros::E_MOTOR_BRAKE_HOLD);
@@ -499,7 +368,7 @@ void opcontrol()
 
 		anglerControl();
 
-		lift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	 lift.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
 	 if (btnUp.changedToPressed()) {
 			 liftControl->setTarget(1800);
